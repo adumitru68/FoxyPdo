@@ -1,0 +1,2 @@
+# readyPdo
+Mysql pdo wrapper
