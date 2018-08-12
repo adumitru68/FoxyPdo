@@ -1,0 +1,28 @@
+{
+	"name": "qpdb/foxy-pdo-wrapper",
+	"type": "library",
+	"description": "php Pdo wrapper",
+	"keywords": [
+		"php",
+		"pdo",
+		"MySql"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Adrian Dumitru",
+			"email": "adrian.dumitru.68@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.6",
+		"psr/log": "^1.0",
+		"monolog/monolog": "^1.23"
+	},
+	"autoload": {
+		"psr-4": {
+			"Qpdb\\PdoWrapper\\": "src/"
+		}
+	}
+}
