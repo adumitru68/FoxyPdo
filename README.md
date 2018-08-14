@@ -1,2 +1,2 @@
-# readyPdo
+# FoxyPdo
 Mysql pdo wrapper
