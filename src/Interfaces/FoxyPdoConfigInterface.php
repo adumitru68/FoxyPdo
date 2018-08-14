@@ -42,7 +42,7 @@ interface FoxyPdoConfigInterface
 	 * @param string $query
 	 * @param double $duration
 	 */
-	public function handlePdoExecution($query, $duration);
+	public function handlePdoExecute( $query, $duration );
 
 
 }
