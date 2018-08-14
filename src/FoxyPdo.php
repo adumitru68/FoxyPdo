@@ -32,6 +32,7 @@ class FoxyPdo
 	private $foxyPdoHelper;
 
 
+
 	public function __construct( FoxyPdoConfigInterface $foxyPdoConfig = null )
 	{
 		$this->foxyPdoHelper = new FoxyPdoHelper();
@@ -66,6 +67,29 @@ class FoxyPdo
 		return $this->queryInit( $query, $parameters );
 	}
 
+	/**
+	 * @param $query
+	 * @param array $parameters
+	 * @param int $fetchMode
+	 * @return array
+	 */
+	public function queryFetch( $query, $parameters = [], $fetchMode = \PDO::FETCH_ASSOC )
+	{
+		return $this->query( $query, $parameters )->fetch( $fetchMode );
+	}
+
+
+	/**
+	 * @param $query
+	 * @param array $parameters
+	 * @param int $fetchMode
+	 * @return array
+	 */
+	public function queryFetchAll( $query, $parameters = [], $fetchMode = \PDO::FETCH_ASSOC )
+	{
+		return $this->query( $query, $parameters )->fetchAll( $fetchMode );
+	}
+
 
 	/**
 	 * @param \Closure $closure
@@ -93,22 +117,26 @@ class FoxyPdo
 		return $result;
 	}
 
-	public function transactionStart() {
+	public function transactionStart()
+	{
 		$this->connection->getPdo()->beginTransaction();
 	}
 
-	public function transactionEnd() {
+	public function transactionEnd()
+	{
 		$this->connection->getPdo()->commit();
 	}
 
-	public function transactionRollBack() {
+	public function transactionRollBack()
+	{
 		$this->connection->getPdo()->rollBack();
 	}
 
 	/**
 	 * @return string
 	 */
-	public function lastInsertId() {
+	public function lastInsertId()
+	{
 		return $this->connection->getPdo()->lastInsertId();
 	}
 
