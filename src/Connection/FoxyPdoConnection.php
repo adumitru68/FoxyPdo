@@ -78,6 +78,7 @@ final class FoxyPdoConnection
 		}
 
 		return $pdo;
+
 	}
 
 
