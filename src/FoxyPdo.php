@@ -16,6 +16,8 @@ use Qpdb\PdoWrapper\Interfaces\FoxyPdoConfigInterface;
 class FoxyPdo
 {
 
+	private static $instance;
+
 	/**
 	 * @var FoxyPdoConfigInterface
 	 */
@@ -164,7 +166,7 @@ class FoxyPdo
 					$type = \PDO::PARAM_STR;
 				}
 				$queryStatement->bindValue( $value[ 0 ], $value[ 1 ], $type );
-				$this->foxyPdoConfig->handlePdoExecution( $query, microtime( true ) - $startQueryTime );
+				$this->foxyPdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
 			}
 			$queryStatement->execute();
 
@@ -182,5 +184,15 @@ class FoxyPdo
 		return $queryStatement;
 	}
 
+	/**
+	 * @return $this
+	 */
+	public static function getInstance()
+	{
+		if(!self::$instance)
+			self::$instance = new static();
+
+		return self::$instance;
+	}
 
 }

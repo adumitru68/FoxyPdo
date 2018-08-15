@@ -1,5 +1,5 @@
 {
-	"name": "qpdb/foxy-pdo-wrapper",
+	"name": "qpdb/foxy/pdo-wrapper",
 	"type": "library",
 	"description": "php Pdo wrapper",
 	"keywords": [

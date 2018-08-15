@@ -33,10 +33,10 @@ interface FoxyPdoConfigInterface
 	public function getDbName();
 
 	/**
-	 * @param \PDOException $e
+	 * @param \Exception $e
 	 * @param array $otherInformation
 	 */
-	public function handlePdoException( \PDOException $e, $otherInformation = [] );
+	public function handlePdoException( \Exception $e, $otherInformation = [] );
 
 	/**
 	 * @param string $query
