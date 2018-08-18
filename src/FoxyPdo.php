@@ -40,8 +40,7 @@ class FoxyPdo
 		$this->foxyPdoHelper = new FoxyPdoHelper();
 
 		if ( !is_null( $foxyPdoConfig ) ) {
-			$this->foxyPdoConfig = $foxyPdoConfig;
-			$this->connection = new FoxyPdoConnection( $foxyPdoConfig );
+			$this->setFoxyPdoConfig( $foxyPdoConfig );
 		}
 	}
 
