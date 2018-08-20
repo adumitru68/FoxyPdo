@@ -9,7 +9,7 @@
 namespace Qpdb\PdoWrapper\Interfaces;
 
 
-interface FoxyPdoConfigInterface
+interface PdoWrapperConfigInterface
 {
 
 	/**

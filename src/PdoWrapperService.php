@@ -9,50 +9,50 @@
 namespace Qpdb\PdoWrapper;
 
 
-use Qpdb\PdoWrapper\Connection\FoxyPdoConnection;
-use Qpdb\PdoWrapper\Helpers\FoxyPdoHelper;
-use Qpdb\PdoWrapper\Interfaces\FoxyPdoConfigInterface;
+use Qpdb\PdoWrapper\Connection\PdoWrapperConnection;
+use Qpdb\PdoWrapper\Helpers\PdoWrapperHelper;
+use Qpdb\PdoWrapper\Interfaces\PdoWrapperConfigInterface;
 
-class FoxyPdo
+class PdoWrapperService
 {
 
 	private static $instance;
 
 	/**
-	 * @var FoxyPdoConfigInterface
+	 * @var PdoWrapperConfigInterface
 	 */
-	private $foxyPdoConfig;
+	private $pdoConfig;
 
 	/**
-	 * @var FoxyPdoConnection
+	 * @var PdoWrapperConnection
 	 */
 	private $connection;
 
 	/**
-	 * @var FoxyPdoHelper
+	 * @var PdoWrapperHelper
 	 */
-	private $foxyPdoHelper;
+	private $pdoWrapperHelper;
 
 
 
-	public function __construct( FoxyPdoConfigInterface $foxyPdoConfig = null )
+	public function __construct( PdoWrapperConfigInterface $foxyPdoConfig = null )
 	{
-		$this->foxyPdoHelper = new FoxyPdoHelper();
+		$this->pdoWrapperHelper = new PdoWrapperHelper();
 
 		if ( !is_null( $foxyPdoConfig ) ) {
-			$this->setFoxyPdoConfig( $foxyPdoConfig );
+			$this->setPdoWrapperConfig( $foxyPdoConfig );
 		}
 	}
 
 
 	/**
-	 * @param FoxyPdoConfigInterface $foxyPdoConfig
-	 * @return FoxyPdo
+	 * @param PdoWrapperConfigInterface $foxyPdoConfig
+	 * @return PdoWrapperService
 	 */
-	public function setFoxyPdoConfig( $foxyPdoConfig )
+	public function setPdoWrapperConfig( $foxyPdoConfig )
 	{
-		$this->foxyPdoConfig = $foxyPdoConfig;
-		$this->connection = new FoxyPdoConnection( $foxyPdoConfig );
+		$this->pdoConfig = $foxyPdoConfig;
+		$this->connection = new PdoWrapperConnection( $foxyPdoConfig );
 
 		return $this;
 	}
@@ -111,7 +111,7 @@ class FoxyPdo
 
 			$this->connection->getPdo()->rollBack();
 			$result = null;
-			$this->foxyPdoConfig->handlePdoException( $e, [ 'query' => 'transaction' ] );
+			$this->pdoConfig->handlePdoException( $e, [ 'query' => 'transaction' ] );
 
 		}
 
@@ -146,7 +146,7 @@ class FoxyPdo
 	{
 		$startQueryTime = microtime( true );
 		$queryStatement = null;
-		$processedParameters = $this->foxyPdoHelper->prepareParams( $params );
+		$processedParameters = $this->pdoWrapperHelper->prepareParams( $params );
 
 		try {
 
@@ -165,12 +165,12 @@ class FoxyPdo
 					$type = \PDO::PARAM_STR;
 				}
 				$queryStatement->bindValue( $value[ 0 ], $value[ 1 ], $type );
-				$this->foxyPdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
+				$this->pdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
 			}
 			$queryStatement->execute();
 
 		} catch ( \PDOException $e ) {
-			$this->foxyPdoConfig->handlePdoException(
+			$this->pdoConfig->handlePdoException(
 				$e,
 				[
 					'query' => $query,

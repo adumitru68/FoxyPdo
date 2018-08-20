@@ -9,7 +9,7 @@
 namespace Qpdb\PdoWrapper\Helpers;
 
 
-class FoxyPdoHelper
+class PdoWrapperHelper
 {
 
 	/**

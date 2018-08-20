@@ -9,17 +9,17 @@
 namespace Qpdb\PdoWrapper\Connection;
 
 
-use Qpdb\PdoWrapper\Interfaces\FoxyPdoConfigInterface;
+use Qpdb\PdoWrapper\Interfaces\PdoWrapperConfigInterface;
 
 /**
  * Class FoxyPdoConnection
  * @package Qpdb\PdoWrapper\Connection
  */
-final class FoxyPdoConnection
+final class PdoWrapperConnection
 {
 
 	/**
-	 * @var FoxyPdoConfigInterface
+	 * @var PdoWrapperConfigInterface
 	 */
 	private $foxyPdoConfig;
 
@@ -29,7 +29,7 @@ final class FoxyPdoConnection
 	private $pdo;
 
 
-	public function __construct( FoxyPdoConfigInterface $foxyPdoConfig )
+	public function __construct( PdoWrapperConfigInterface $foxyPdoConfig )
 	{
 		$this->foxyPdoConfig = $foxyPdoConfig;
 	}

@@ -9,7 +9,7 @@
 namespace Qpdb\PdoWrapper\Exceptions;
 
 
-class FoxyPdoException extends \PDOException
+class PdoWrapperException extends \PDOException
 {
 
 }
