@@ -34,7 +34,10 @@ class PdoWrapperService
 	private $pdoWrapperHelper;
 
 
-
+	/**
+	 * PdoWrapperService constructor.
+	 * @param PdoWrapperConfigInterface|null $foxyPdoConfig
+	 */
 	public function __construct( PdoWrapperConfigInterface $foxyPdoConfig = null )
 	{
 		$this->pdoWrapperHelper = new PdoWrapperHelper();
@@ -49,7 +52,7 @@ class PdoWrapperService
 	 * @param PdoWrapperConfigInterface $foxyPdoConfig
 	 * @return PdoWrapperService
 	 */
-	public function setPdoWrapperConfig( $foxyPdoConfig )
+	public function setPdoWrapperConfig( PdoWrapperConfigInterface $foxyPdoConfig )
 	{
 		$this->pdoConfig = $foxyPdoConfig;
 		$this->connection = new PdoWrapperConnection( $foxyPdoConfig );
@@ -123,7 +126,7 @@ class PdoWrapperService
 		$this->connection->getPdo()->beginTransaction();
 	}
 
-	public function transactionEnd()
+	public function transactionCommit()
 	{
 		$this->connection->getPdo()->commit();
 	}
@@ -141,7 +144,11 @@ class PdoWrapperService
 		return $this->connection->getPdo()->lastInsertId();
 	}
 
-
+	/**
+	 * @param $query
+	 * @param array $params
+	 * @return null|\PDOStatement
+	 */
 	private function queryInit( $query, array $params )
 	{
 		$startQueryTime = microtime( true );
@@ -188,7 +195,7 @@ class PdoWrapperService
 	 */
 	public static function getInstance()
 	{
-		if(!self::$instance)
+		if ( !self::$instance )
 			self::$instance = new static();
 
 		return self::$instance;
