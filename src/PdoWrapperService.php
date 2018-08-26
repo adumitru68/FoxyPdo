@@ -147,12 +147,12 @@ class PdoWrapperService
 	/**
 	 * @param $query
 	 * @param array $params
-	 * @return null|\PDOStatement
+	 * @return bool|\PDOStatement
 	 */
 	private function queryInit( $query, array $params )
 	{
 		$startQueryTime = microtime( true );
-		$queryStatement = null;
+		$queryStatement = false;
 		$processedParameters = $this->pdoWrapperHelper->prepareParams( $params );
 
 		try {
