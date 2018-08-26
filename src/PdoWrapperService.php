@@ -62,9 +62,9 @@ class PdoWrapperService
 
 
 	/**
-	 * @param string $query
+	 * @param $query
 	 * @param array $parameters
-	 * @return \PDOStatement
+	 * @return bool|\PDOStatement
 	 */
 	public function query( $query, $parameters = [] )
 	{
@@ -152,7 +152,6 @@ class PdoWrapperService
 	private function queryInit( $query, array $params )
 	{
 		$startQueryTime = microtime( true );
-		$queryStatement = false;
 		$processedParameters = $this->pdoWrapperHelper->prepareParams( $params );
 
 		try {
@@ -185,6 +184,7 @@ class PdoWrapperService
 					'processedParameters' => $processedParameters
 				]
 			);
+			return false;
 		}
 
 		return $queryStatement;
