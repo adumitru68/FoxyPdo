@@ -36,26 +36,26 @@ class PdoWrapperService
 
 	/**
 	 * PdoWrapperService constructor.
-	 * @param PdoWrapperConfigInterface|null $foxyPdoConfig
+	 * @param PdoWrapperConfigInterface|null $pdpConfig
 	 */
-	public function __construct( PdoWrapperConfigInterface $foxyPdoConfig = null )
+	public function __construct( PdoWrapperConfigInterface $pdpConfig = null )
 	{
 		$this->pdoWrapperHelper = new PdoWrapperHelper();
 
-		if ( !is_null( $foxyPdoConfig ) ) {
-			$this->setPdoWrapperConfig( $foxyPdoConfig );
+		if ( !is_null( $pdpConfig ) ) {
+			$this->setPdoWrapperConfig( $pdpConfig );
 		}
 	}
 
 
 	/**
-	 * @param PdoWrapperConfigInterface $foxyPdoConfig
+	 * @param PdoWrapperConfigInterface $pdoConfig
 	 * @return PdoWrapperService
 	 */
-	public function setPdoWrapperConfig( PdoWrapperConfigInterface $foxyPdoConfig )
+	public function setPdoWrapperConfig( PdoWrapperConfigInterface $pdoConfig )
 	{
-		$this->pdoConfig = $foxyPdoConfig;
-		$this->connection = new PdoWrapperConnection( $foxyPdoConfig );
+		$this->pdoConfig = $pdoConfig;
+		$this->connection = new PdoWrapperConnection( $pdoConfig );
 
 		return $this;
 	}
@@ -171,9 +171,9 @@ class PdoWrapperService
 					$type = \PDO::PARAM_STR;
 				}
 				$queryStatement->bindValue( $value[ 0 ], $value[ 1 ], $type );
-				$this->pdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
 			}
 			$queryStatement->execute();
+			$this->pdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
 
 		} catch ( \PDOException $e ) {
 			$this->pdoConfig->handlePdoException(

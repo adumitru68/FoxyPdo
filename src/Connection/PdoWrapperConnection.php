@@ -21,7 +21,7 @@ final class PdoWrapperConnection
 	/**
 	 * @var PdoWrapperConfigInterface
 	 */
-	private $foxyPdoConfig;
+	private $pdoConfig;
 
 	/**
 	 * @var \PDO
@@ -29,9 +29,9 @@ final class PdoWrapperConnection
 	private $pdo;
 
 
-	public function __construct( PdoWrapperConfigInterface $foxyPdoConfig )
+	public function __construct( PdoWrapperConfigInterface $pdoConfig )
 	{
-		$this->foxyPdoConfig = $foxyPdoConfig;
+		$this->pdoConfig = $pdoConfig;
 	}
 
 	/**
@@ -56,15 +56,15 @@ final class PdoWrapperConnection
 	 */
 	private function connect()
 	{
-		$dsn = 'mysql:dbname=' . $this->foxyPdoConfig->getDbName() . ';host=' . $this->foxyPdoConfig->getHost() . '';
+		$dsn = 'mysql:dbname=' . $this->pdoConfig->getDbName() . ';host=' . $this->pdoConfig->getHost() . '';
 		$pdo = null;
 
 		try {
 
 			$pdo = new \PDO(
 				$dsn,
-				$this->foxyPdoConfig->getUser(),
-				$this->foxyPdoConfig->getPassword(),
+				$this->pdoConfig->getUser(),
+				$this->pdoConfig->getPassword(),
 				[
 					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
 				]
@@ -74,7 +74,7 @@ final class PdoWrapperConnection
 			$pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false );
 
 		} catch ( \PDOException $e ) {
-			$this->foxyPdoConfig->handlePdoException( $e );
+			$this->pdoConfig->handlePdoException( $e );
 		}
 
 		return $pdo;
