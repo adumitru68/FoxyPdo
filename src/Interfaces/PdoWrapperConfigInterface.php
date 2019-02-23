@@ -9,6 +9,8 @@
 namespace Qpdb\PdoWrapper\Interfaces;
 
 
+use Qpdb\PdoWrapper\Helpers\QueryTimer;
+
 interface PdoWrapperConfigInterface
 {
 
@@ -39,10 +41,11 @@ interface PdoWrapperConfigInterface
 	public function handlePdoException( \Exception $e, $otherInformation = [] );
 
 	/**
-	 * @param string $query
-	 * @param double $duration
+	 * @param string     $query
+	 * @param QueryTimer $timer
+	 * @return void
 	 */
-	public function handlePdoExecute( $query, $duration );
+	public function handlePdoExecute( $query, QueryTimer $timer );
 
 
 }

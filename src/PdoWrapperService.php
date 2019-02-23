@@ -11,6 +11,7 @@ namespace Qpdb\PdoWrapper;
 
 use Qpdb\PdoWrapper\Connection\PdoWrapperConnection;
 use Qpdb\PdoWrapper\Helpers\PdoWrapperHelper;
+use Qpdb\PdoWrapper\Helpers\QueryTimer;
 use Qpdb\PdoWrapper\Interfaces\PdoWrapperConfigInterface;
 
 class PdoWrapperService
@@ -151,7 +152,8 @@ class PdoWrapperService
 	 */
 	private function queryInit( $query, array $params )
 	{
-		$startQueryTime = microtime( true );
+
+		$timer = new QueryTimer();
 		$processedParameters = $this->pdoWrapperHelper->prepareParams( $params );
 
 		try {
@@ -173,7 +175,7 @@ class PdoWrapperService
 				$queryStatement->bindValue( $value[ 0 ], $value[ 1 ], $type );
 			}
 			$queryStatement->execute();
-			$this->pdoConfig->handlePdoExecute( $query, microtime( true ) - $startQueryTime );
+			$this->pdoConfig->handlePdoExecute( $query, $timer);
 
 		} catch ( \PDOException $e ) {
 			$this->pdoConfig->handlePdoException(
