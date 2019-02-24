@@ -50,7 +50,7 @@ class ConfigSample implements PdoWrapperConfigInterface
 	public function handlePdoException( \Exception $e, $otherInformation = [] )
 	{   
 	    //log error message
-        throw new \Exception( $e->getMessage() );
+	    throw new \Exception( $e->getMessage() );
 	}
 
 
