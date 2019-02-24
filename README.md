@@ -16,7 +16,7 @@ composer require qpdb/pdo-wrapper
 
 Create a configuration class that ```ConfigSample``` implements the ```Qpdb\PdoWrapper\Interfaces\PdoWrapperConfigInterface```  interface as in the following example:
 
-[ConfigSample class]('docs/ConfigSample.md).
+[ConfigSample class](docs/ConfigSample.md).
 
 ```php
 use Name\Space\To\ConfigSample;
