@@ -24,21 +24,37 @@ final class PdoWrapperConnection
 	private $pdoConfig;
 
 	/**
+	 * @var array
+	 */
+	private $pdoOptions;
+
+	/**
+	 * @var array
+	 */
+	private $pdoOptionsDefault = [
+		\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+	];
+
+
+	/**
 	 * @var \PDO
 	 */
 	private $pdo;
 
 
-	public function __construct( PdoWrapperConfigInterface $pdoConfig )
-	{
+	/**
+	 * PdoWrapperConnection constructor.
+	 * @param PdoWrapperConfigInterface $pdoConfig
+	 */
+	public function __construct( PdoWrapperConfigInterface $pdoConfig ) {
 		$this->pdoConfig = $pdoConfig;
+		$this->pdoOptions = array_merge( $this->pdoOptionsDefault, $this->pdoConfig->getPdoOptions() );
 	}
 
 	/**
 	 * @return \PDO
 	 */
-	public function getPdo()
-	{
+	public function getPdo() {
 		if ( !$this->pdo instanceof \PDO ) {
 			$this->pdo = $this->connect();
 		}
@@ -46,16 +62,14 @@ final class PdoWrapperConnection
 		return $this->pdo;
 	}
 
-	public function closeConnection()
-	{
+	public function closeConnection() {
 		$this->pdo = null;
 	}
 
 	/**
 	 * @return \PDO
 	 */
-	private function connect()
-	{
+	private function connect() {
 		$dsn = 'mysql:dbname=' . $this->pdoConfig->getDbName() . ';host=' . $this->pdoConfig->getHost() . '';
 		$pdo = null;
 
@@ -65,9 +79,7 @@ final class PdoWrapperConnection
 				$dsn,
 				$this->pdoConfig->getUser(),
 				$this->pdoConfig->getPassword(),
-				[
-					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-				]
+				$this->pdoOptions
 			);
 
 			$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );

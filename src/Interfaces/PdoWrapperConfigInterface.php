@@ -35,6 +35,12 @@ interface PdoWrapperConfigInterface
 	public function getDbName();
 
 	/**
+	 * @return array
+	 */
+	public function getPdoOptions();
+
+
+	/**
 	 * @param \Exception $e
 	 * @param array $otherInformation
 	 */

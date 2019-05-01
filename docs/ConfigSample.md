@@ -44,6 +44,16 @@ class ConfigSample implements PdoWrapperConfigInterface
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getPdoOptions(){
+	    return [
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone='+00:00';",
+	    ];
+	}
+
+	/**
 	 * @param \Exception $e
 	 * @param array $otherInformation
 	 */
