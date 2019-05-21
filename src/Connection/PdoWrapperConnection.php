@@ -26,20 +26,6 @@ final class PdoWrapperConnection
 	/**
 	 * @var array
 	 */
-	private $pdoOptions;
-
-	/**
-	 * @var array
-	 */
-	private $pdoOptionsDefault = [
-		\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-		\PDO::ATTR_EMULATE_PREPARES => false,
-	];
-
-	/**
-	 * @var array
-	 */
 	private $execCommands;
 
 
@@ -55,7 +41,6 @@ final class PdoWrapperConnection
 	 */
 	public function __construct( PdoWrapperConfigInterface $pdoConfig ) {
 		$this->pdoConfig = $pdoConfig;
-		$this->pdoOptions = array_replace_recursive( $this->pdoOptionsDefault, $this->pdoConfig->getPdoOptions() );
 		$this->execCommands = $this->pdoConfig->getExecCommands();
 	}
 
@@ -87,8 +72,13 @@ final class PdoWrapperConnection
 				$dsn,
 				$this->pdoConfig->getUser(),
 				$this->pdoConfig->getPassword(),
-				$this->pdoOptions
+				[
+					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+				]
 			);
+
+			$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
+			$pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false );
 
 			foreach ( $this->execCommands as $command ) {
 				$pdo->exec( $command );

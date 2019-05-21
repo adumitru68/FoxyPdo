@@ -37,11 +37,6 @@ interface PdoWrapperConfigInterface
 	/**
 	 * @return array
 	 */
-	public function getPdoOptions();
-
-	/**
-	 * @return array
-	 */
 	public function getExecCommands();
 
 
