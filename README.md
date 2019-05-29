@@ -26,7 +26,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Name\Space\To\ConfigSample;
 use Qpdb\PdoWrapper\PdoWrapperService;
 $configSample = new ConfigSample();
-PdoWrapperService::getInstance()->setPdoWrapperConfig($configDb);
+PdoWrapperService::getInstance()->setPdoWrapperConfig($configSample);
 
 $sql = "SELECT `id`, `name`, `icon` FROM `categories` WHERE `id` < ?";
 $result = PdoWrapperService::getInstance()->queryFetchAll($sql, [3]);
