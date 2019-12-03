@@ -26,6 +26,15 @@ final class PdoWrapperConnection
 	/**
 	 * @var array
 	 */
+	private $pdoConfigOptionsDefault = [
+		\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+		\PDO::ATTR_EMULATE_PREPARES => false,
+	];
+
+	/**
+	 * @var array
+	 */
 	private $execCommands;
 
 
@@ -66,19 +75,20 @@ final class PdoWrapperConnection
 		$dsn = 'mysql:dbname=' . $this->pdoConfig->getDbName() . ';host=' . $this->pdoConfig->getHost() . '';
 		$pdo = null;
 
+		$options = $this->pdoConfigOptionsDefault;
+
+		foreach ($this->pdoConfig->getOptions() as $key => $val) {
+			$options[$key] = $val;
+		}
+
 		try {
 
 			$pdo = new \PDO(
 				$dsn,
 				$this->pdoConfig->getUser(),
 				$this->pdoConfig->getPassword(),
-				[
-					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-				]
+				$options
 			);
-
-			$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
-			$pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false );
 
 			foreach ( $this->execCommands as $command ) {
 				$pdo->exec( $command );

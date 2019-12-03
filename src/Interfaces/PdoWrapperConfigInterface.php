@@ -39,6 +39,11 @@ interface PdoWrapperConfigInterface
 	 */
 	public function getExecCommands();
 
+	/**
+	 * @return array
+	 */
+	public function getOptions();
+
 
 	/**
 	 * @param \Exception $e
